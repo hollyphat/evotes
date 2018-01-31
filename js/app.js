@@ -67,6 +67,7 @@ function scan(matric,password)
                             url: 'http://evote.allskynews.com.ng/api.php',
                             type: 'post',
                             data: {
+                                'login': ''
                                 'martic' : matric,
                                 'password' : password,
                                 'vin' : value
@@ -76,6 +77,7 @@ function scan(matric,password)
                             cache: false,
                             timeout: 45000,
                             success: function(f){
+                                myApp.hidePreloader();
                                 var total = f.total;
 
                                 if(total == 1){
@@ -95,7 +97,8 @@ function scan(matric,password)
                             },
                             error: function(e){
                                 myApp.hidePreloader();
-                                myApp.alert("Network problem...");
+                                myApp.alert(e.responseText);
+                                //myApp.alert("Network problem...");
                             }
 
                         });
