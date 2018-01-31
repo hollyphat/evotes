@@ -67,7 +67,7 @@ function scan(matric,password)
                             url: 'http://evote.allskynews.com.ng/api.php',
                             type: 'post',
                             data: {
-                                'login': ''
+                                'login': '',
                                 'martic' : matric,
                                 'password' : password,
                                 'vin' : value
