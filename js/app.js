@@ -35,53 +35,13 @@ $$("#decode-form").on('submit',function(e){
 
         //sessionStorage.setItem("local_matric",matric);
 
-        var vin = scan; //(matric,password);
-
-        myApp.showPreloader("Verification in progress, please wait...");
-
-        $$.ajax({
-            url: 'http://evote.allskynews.com.ng/api.php',
-            type: 'post',
-            data: {
-                'login': '',
-                'martic' : matric,
-                'password' : password,
-                'vin' : value
-            },
-            dataType: 'json',
-            crossDomain: true,
-            cache: false,
-            timeout: 45000,
-            success: function(f){
-                myApp.hidePreloader();
-                var total = f.total;
-
-                if(total == 1){
-                    var datas = f.records;
-
-                    var img_uri = f.img;
-
-                    var name = f.names;
-
-                    var str = "<p align='center'><img width='120' class='img-responsive img-border' src='"+img_uri+"'></p>";
-                    str += "<p align='center'>Hi "+name+", your accreditation was successfully, you can now vote!</p>";
-
-                    myApp.alert(str);
-                }else{
-                    myApp.alert("Record not found...");
-                }
-            },
-            error: function(e){
-                myApp.hidePreloader();
-                myApp.alert(e.responseText);
-                //myApp.alert("Network problem...");
-            }
-
-        });
+        scan(matric,password);
 });
 
-function scan()
+function scan(matric,password)
 {
+    myApp.alert(matric);
+    myApp.alert(password);
     cordova.plugins.barcodeScanner.scan(
         function (result) {
             if(!result.cancelled)
@@ -103,7 +63,47 @@ function scan()
 
                         }*/
 
-                        return value;
+                        myApp.showPreloader("Verification in progress, please wait...");
+
+                        $$.ajax({
+                            url: 'http://evote.allskynews.com.ng/api.php',
+                            type: 'post',
+                            data: {
+                                'login': '',
+                                'martic' : matric,
+                                'password' : password,
+                                'vin' : value
+                            },
+                            dataType: 'json',
+                            crossDomain: true,
+                            cache: false,
+                            timeout: 45000,
+                            success: function(f){
+                                myApp.hidePreloader();
+                                var total = f.total;
+
+                                if(total == 1){
+                                    var datas = f.records;
+
+                                    var img_uri = f.img;
+
+                                    var name = f.names;
+
+                                    var str = "<p align='center'><img width='120' class='img-responsive img-border' src='"+img_uri+"'></p>";
+                                    str += "<p align='center'>Hi "+name+", your accreditation was successfully, you can now vote!</p>";
+
+                                    myApp.alert(str);
+                                }else{
+                                    myApp.alert("Record not found...");
+                                }
+                            },
+                            error: function(e){
+                                myApp.hidePreloader();
+                                myApp.alert(e.responseText);
+                                //myApp.alert("Network problem...");
+                            }
+
+                        });
 
                         //alert("Done");
                     
