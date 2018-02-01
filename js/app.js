@@ -40,8 +40,8 @@ $$("#decode-form").on('submit',function(e){
 
 function scan(matric,password)
 {
-    myApp.alert(matric);
-    myApp.alert(password);
+    //myApp.alert(matric);
+    //myApp.alert(password);
     cordova.plugins.barcodeScanner.scan(
         function (result) {
             if(!result.cancelled)
