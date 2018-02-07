@@ -42,6 +42,9 @@ function scan(matric,password)
 {
     //myApp.alert(matric);
     //myApp.alert(password);
+    
+    var mat = matric;
+    var pass = password;
     cordova.plugins.barcodeScanner.scan(
         function (result) {
             if(!result.cancelled)
@@ -49,7 +52,7 @@ function scan(matric,password)
                 if(result.format == "QR_CODE")
                 {
                         
-                        var value = result.text;
+                        var vin = result.text;
                         //var entered_matric = matric; //sessionStorage.getItem("local_matric");
 
                         //var decoded_matric = decode_qr(value);
@@ -70,9 +73,9 @@ function scan(matric,password)
                             type: 'post',
                             data: {
                                 'login': '',
-                                'martic' : matric,
-                                'password' : password,
-                                'vin' : value
+                                'martic' : mat,
+                                'password' : pass,
+                                'vin' : vin
                             },
                             dataType: 'json',
                             crossDomain: true,
@@ -94,7 +97,7 @@ function scan(matric,password)
 
                                     myApp.alert(str);
                                 }else{
-                                    myApp.alert("Record not found...");
+                                    myApp.alert(f.msg);
                                 }
                             },
                             error: function(e){
